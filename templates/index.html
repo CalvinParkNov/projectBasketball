@@ -1,0 +1,56 @@
+{% include './inc/header.html' %}
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<script>
+    alert("{{messages[0]}}")
+</script>
+{% endif %}
+{% endwith %}
+<div class="top_wrap">
+    <div class="top">
+        <img src="../static/img/logo.png" alt="로고">
+        <button type="button" class="btn btn-warning" onclick="location.href='/login'"><span>로그인</span></button>
+    </div>
+</div>
+<div class="write_wrap">
+    <button type="button" class="btn btn-primary" onclick="location.href='/write'">글쓰기</button>
+</div>
+{% for c in list %}
+<div class="content_wrap">
+    <div class="content">
+        <div class="card">
+            <div class="card-body">
+                <p class="card-text"><small class="text-writer">by.작성자</small></p>
+                <h5 class="card-title">({{ c.location }}) {{ c.title}}</h5>
+                <p class="card-text"><small class="text-writer">{{ c.address }}</small></p>
+                <p class="card-text"><small class="text-muted">{{ c.ins_date }}</small></p>
+            </div>
+            <div class="card_bottom">
+                <div class="card_bottom_text">
+                    <span>5</span><small class="text-muted">명 참가</small>
+                </div>
+                <button type="button" class="btn btn-success" onclick="attend({{ c.index }})">
+                    <s기pan>참가하기</s기pan>
+                </button>
+            </div>
+        </div>
+    </div>
+    {%endfor%}
+</div>
+<script>
+    function attend(num) {
+        let index = num;
+        $.ajax({
+            type: "POST",
+            url: "/attend",
+            data: {index: index},
+            success: function (response) {
+                alert(response["msg"])
+                window.location.reload()
+            }
+        });
+
+    }
+</script>
+
+{% include './inc/footer.html' %}

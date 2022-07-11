@@ -1,0 +1,89 @@
+{% include './inc/header.html' %}
+
+<h1>글 추가 하기</h1>
+
+<form action="/submitContent" method="post" onsubmit="return formChk()">
+    <table>
+        <tr>
+            <td>주소:</td>
+            <td>
+                <input type="text" name="address" id="address" placeholder="주소를 넣어주세요." required/>
+            </td>
+        </tr>
+        <tr>
+            <td>지역</td>
+            <td>
+                <select id="location" name="location">
+                    <option value="0">지역을 선택해주세요.</option>
+                    <option value="서울">서울</option>
+                    <option value="부산">부산</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>진행 방식:</td>
+            <td>
+                <select id="type" name="type" required>
+                    <option value="0">진행방식을 선택해주세요.</option>
+                    <option value="6">3x3</option>
+                    <option value="10">5x5</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>구인 수</td>
+            <td>
+                <input type="number" max="12" id="players" name="players" placeholder="총원은 12명 이하로 해주세요" required/>
+            </td>
+        </tr>
+        <tr>
+            <td> 제목</td>
+            <td>
+                <input type="text" id="title" name="title" required/>
+            </td>
+        </tr>
+        <tr>
+            <td>내용:</td>
+            <td>
+            <textarea id="content" name="content" required>
+             </textarea>
+            </td>
+        </tr>
+        <tr>
+
+
+        </tr>
+    </table>
+    <button type="submit">제출하기</button>
+</form>
+
+
+<script>
+    function formChk() {
+        let title = $("#title").val();
+        let location = $("#location option:selected").val();
+        let type = $("#type option:selected").val();
+        let content = $("#content").val();
+        let players = $("#players").val();
+
+        if (!title) {
+            alert("제목을 입력해주세요.");
+            return false;
+        } else if (location == 0) {
+            alert("지역을 선택해주세요.");
+            return false;
+        } else if (type == 0) {
+            alert("진행 방식을 선택해주세요.");
+            return false;
+        } else if (!content) {
+            alert("내용을 입력해주세요.");
+            return false;
+        } else if (players > 12) {
+            alert("총인원은 12명 이하 입니다.");
+            return false;
+        } else {
+            return true;
+        }
+    }
+</script>
+{% include './inc/footer.html' %}
